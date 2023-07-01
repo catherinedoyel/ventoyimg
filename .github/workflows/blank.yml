@@ -47,8 +47,8 @@ jobs:
           echo sudo mkdir /mnt/loop/ventoy
           sudo cp ventoy.json /mnt/loop/ventoy
           echo sudo cp ventoy.json /mnt/loop/ventoy
-          cd /mnt/loop
-          echo cd /mnt/loop
+          cd /mnt/loop/
+          echo cd /mnt/loop/
           curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | tee | grep browser_download_url.*iso | tee | cut -d : -f 2,3 | tee | tr -d \" | tee | wget -qi -
           echo curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | tee | grep browser_download_url.*iso | tee | cut -d : -f 2,3 | tee | tr -d \" | tee | wget -qi -
           sudo sync
