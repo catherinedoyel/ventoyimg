@@ -69,29 +69,22 @@ jobs:
           sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
           cd ..
           sudo mkdosfs -F 32 /dev/loop3p1 -n VENTOY
-          echo 1
           sudo mount /dev/loop3p1 /mnt/loop
-          echo 2
           sudo chmod 777 /mnt/loop
-          echo 3
           sudo mkdir /mnt/loop/ventoy
-          echo 4
           sudo cp ventoy.json /mnt/loop/ventoy
-          echo 5
           sudo umount /mnt/loop
-          echo 6
           sudo losetup -d /dev/loop3
-          echo 7
           cp /tmp/0512MBempty.img /tmp/0512MBwGpartedLive.img
-          echo 8
+          cd /tmp
+          zip -r 0512MBempty.img.zip 0512MBempty.img
+          rm /tmp/0512MBempty.img
           sudo losetup -fP /tmp/0512MBwGpartedLive.img
-          echo 9
           sudo mount /dev/loop3p1 /mnt/loop
-          echo 10
           cd /mnt/loop
-          echo 11
-          curl -s https://gparted.org/download.php | grep amd64.iso | cut -d : -f 2,3 | tr -d \" | sudo wget -qi -
-          echo 12
+          curl -s https://gparted.org/download.php | grep amd64.iso | cut -f2 -d "\""| sudo wget -qi -
+          sudo sync
+          sudo losetup -d /dev/loop3
       - name: Create release
         id: create-new-release
         uses: actions/create-release@v1
@@ -118,14 +111,14 @@ jobs:
           asset_path: /tmp/256MBempty_build.img.zip
           asset_name: 0256MBempty${{ github.run_number }}.img.zip
           asset_content_type: application/octet-stream
-      - name: Upload 256MBwLiveCD to release
+      - name: Upload 0512MBempty to release
         uses: actions/upload-release-asset@v1
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
             upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-            asset_path: /tmp/0512MBempty.img
-            asset_name: 0512MBempty_build${{ github.run_number }}.img
+            asset_path: /tmp/0512MBempty.img.zip
+            asset_name: 0512MBempty_build${{ github.run_number }}.img.zip
             asset_content_type: application/octet-stream
       - name: Upload 0512MBwGpartedLive to release
         uses: actions/upload-release-asset@v1
