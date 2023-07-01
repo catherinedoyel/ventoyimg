@@ -58,8 +58,29 @@ jobs:
           sudo losetup -d /dev/loop3
           cd /tmp
           zip -r 256MBempty.img.zip 256MBempty.img
+          rm /tmp/256MBempty.img
           ls /tmp
           df -h
+          echo 256 megabyte complete
+          cd $GITHUB_WORKSPACE
+          cd ventoy-*
+          dd if=/dev/zero of=/tmp/0512MBempty.img bs=512 count=988160
+          sudo losetup -fP /tmp/0512MBempty.img
+          sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
+          cd ..
+          sudo mkdosfs -F 32 /dev/loop3p1 -n VENTOY
+          sudo mkdir /mnt/loop
+          sudo mount /dev/loop3p1 /mnt/loop
+          sudo chmod 777 /mnt/loop
+          sudo mkdir /mnt/loop/ventoy
+          sudo cp ventoy.json /mnt/loop/ventoy
+          sudo umount /mnt/loop
+          sudo losetup -d /dev/loop3
+          cp /tmp/0512MBempty.img /tmp/0512MBwGpartedLive.img
+          sudo losetup -fP /tmp/0512MBwGpartedLive.img
+          sudo mount /dev/loop3p1 /mnt/loop
+          cd /mnt/loop
+          curl -s https://gparted.org/download.php | grep amd64.iso | cut -d : -f 2,3 | tr -d \" | sudo wget -qi -
       - name: Create release
         id: create-new-release
         uses: actions/create-release@v1
@@ -75,7 +96,7 @@ jobs:
         with:
           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
           asset_path: /tmp/256MBwLiveCD.img
-          asset_name: 0256MBwLiveCD.img
+          asset_name: 0256MBwLiveCD_build${{ github.run_number }}.img
           asset_content_type: application/octet-stream
       - name: Upload 256MBempty to release
         uses: actions/upload-release-asset@v1
@@ -83,6 +104,24 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-          asset_path: /tmp/256MBempty.img.zip
-          asset_name: 0256MBempty.img.zip
+          asset_path: /tmp/256MBempty_build.img.zip
+          asset_name: 0256MBempty${{ github.run_number }}.img.zip
           asset_content_type: application/octet-stream
+      - name: Upload 256MBwLiveCD to release
+        uses: actions/upload-release-asset@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+            asset_path: /tmp/0512MBempty.img
+            asset_name: 0512MBempty_build${{ github.run_number }}.img
+            asset_content_type: application/octet-stream
+      - name: Upload 0512MBwGpartedLive to release
+        uses: actions/upload-release-asset@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+            asset_path: /tmp/0512MBwGpartedLive.img
+            asset_name: 0512MBwGpartedLive${{ github.run_number }}.img
+            asset_content_type: application/octet-stream
