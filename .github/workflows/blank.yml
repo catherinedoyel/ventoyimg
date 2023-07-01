@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Build 256MB img
+name: Build img
 
 # Controls when the workflow will run
 on:
@@ -42,9 +42,22 @@ jobs:
           sudo mount /dev/loop3p1 /mnt/loop
           sudo mkdir /mnt/loop/ventoy
           sudo cp ventoy.json /mnt/loop/ventoy
+          cd /mnt/loop
+          curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | grep browser_download_url.*livecd.iso | cut -d : -f 2,3 | tr -d \" | wget -qi -
           sudo umount /mnt/loop
           sudo losetup -d /dev/loop3
-      - uses: actions/upload-artifact@v3
+      - name: Create release
+        id: create-new-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-            name: generatedimage
-            path: /tmp/256MBwLiveCD.img
+          tag_name: ${{ github.run_number }}
+          release_name: Release 1
+      - name: Upload image to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload-url: ${{ steps.create-new-release.outputs.upload_url }}
+          asset_path: /tmp/256MBwLiveCD.img
