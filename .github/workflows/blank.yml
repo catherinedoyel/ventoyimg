@@ -75,21 +75,24 @@ jobs:
           sudo cp ventoy.json /mnt/loop/ventoy
           sudo umount /mnt/loop
           sudo losetup -d /dev/loop3
-          cp /tmp/0512MBempty.img /tmp/0512MBwGpartedLive.img
           cd /tmp
           zip -r 0512MBempty.img.zip 0512MBempty.img
-          rm /tmp/0512MBempty.img
-          sudo losetup -fP /tmp/0512MBwGpartedLive.img
-          echo loopback running
+          echo 512 megabyte complete
+          cd $GITHUB_WORKSPACE
+          cd ventoy-*
+          dd if=/dev/zero of=/tmp/1024MBempty.img bs=512 count=1976320
+          sudo losetup -fP /tmp/1024MBempty.img
+          sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
+          cd ..
+          sudo mkdosfs -F 32 /dev/loop3p1 -n VENTOY
           sudo mount /dev/loop3p1 /mnt/loop
-          echo file system mounted
-          cd /mnt/loop
-          df
-          curl -s https://gparted.org/download.php | grep 686.iso | cut -f2 -d "\""| sudo wget -qi -
-          echo file downloaded
-          df
-          sudo sync
+          sudo chmod 777 /mnt/loop
+          sudo mkdir /mnt/loop/ventoy
+          sudo cp ventoy.json /mnt/loop/ventoy
+          sudo umount /mnt/loop
           sudo losetup -d /dev/loop3
+          cd /tmp
+          zip -r 1024MBempty.img.zip 1024MBempty.img
       - name: Create release
         id: create-new-release
         uses: actions/create-release@v1
@@ -125,12 +128,12 @@ jobs:
             asset_path: /tmp/0512MBempty.img.zip
             asset_name: 0512MBempty_build${{ github.run_number }}.img.zip
             asset_content_type: application/octet-stream
-      - name: Upload 0512MBwGpartedLive to release
+      - name: Upload 1024MBempty to release
         uses: actions/upload-release-asset@v1
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
             upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-            asset_path: /tmp/0512MBwGpartedLive.img
-            asset_name: 0512MBwGpartedLive${{ github.run_number }}.img
+            asset_path: /tmp/1024MBempty.img
+            asset_name: 1024MBempty${{ github.run_number }}.img
             asset_content_type: application/octet-stream
