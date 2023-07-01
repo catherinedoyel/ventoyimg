@@ -55,8 +55,8 @@ jobs:
           cd ..
           sudo umount /mnt/loop
           sudo losetup -d /dev/loop3
-          ls /tmp
-          zip -r /tmp/256MBempty.img.zip /tmp/256MBempty.img
+          cd /tmp
+          zip -r /256MBempty.img.zip /256MBempty.img
           ls /tmp
       - name: Create release
         id: create-new-release
