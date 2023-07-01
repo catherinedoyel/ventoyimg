@@ -45,10 +45,10 @@ jobs:
           echo ventoy.json copied
           cd /mnt/loop
           echo directory changed to
-          curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | grep browser_download_url.*iso | cut -d : -f 2,3 | tr -d \" | wget -qi -
+          curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | grep browser_download_url*livecd.iso | cut -d : -f 2,3 | tr -d \" | wget -qi -
           echo file downloaded
           sudo sync
-          cd
+          cd ..
           sudo umount /mnt/loop
           sudo losetup -d /dev/loop3
       - name: Create release
