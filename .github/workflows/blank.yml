@@ -85,7 +85,6 @@ jobs:
           echo file system mounted
           cd /mnt/loop
           df
-          cd /tmp
           curl -s https://gparted.org/download.php | grep 686.iso | cut -f2 -d "\""| sudo wget -qi -
           echo file downloaded
           df
