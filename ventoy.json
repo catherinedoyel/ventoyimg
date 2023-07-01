@@ -1,0 +1,9 @@
+{
+    "control":[
+        { "VTOY_DEFAULT_MENU_MODE": "1" },
+        { "VTOY_LINUX_REMOUNT": "1" }
+    ],
+    "theme":{
+        "display_mode": "serial_console"
+    }
+}
