@@ -28,7 +28,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo $GITHUB_WORKSPACE
           curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | grep browser_download_url.*linux.tar.gz | cut -d : -f 2,3 | tr -d \" | wget -qi -
           tar -xf ventoy-*
           rm *.gz
@@ -37,12 +36,12 @@ jobs:
           losetup
           sudo losetup -fP /tmp/256MBwLiveCD.img
           sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
+          cd ..
           lsblk
           sudo mkdosfs -F 32 /dev/loop3p1 -n ventoy
           sudo mkdir /mnt/loop
           sudo mount /dev/loop3p1 /mnt/loop
           sudo mkdir /mnt/loop/ventoy
-          pwd
-          sudo cp $GITHUB_WORKSPACE/ventoy.json /mnt/loop/ventoy
-          umount /mnt/loop/ventoy
+          sudo cp ventoy.json /mnt/loop/ventoy
+          umount /mnt/loop
           sudo losetup -d /dev/loop3
