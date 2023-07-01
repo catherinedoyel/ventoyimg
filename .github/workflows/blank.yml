@@ -43,6 +43,11 @@ jobs:
           sudo chmod 777 /mnt/loop
           sudo mkdir /mnt/loop/ventoy
           sudo cp ventoy.json /mnt/loop/ventoy
+          sudo umount /mnt/loop
+          sudo losetup -d /dev/loop3
+          cp /tmp/256MBwLiveCD.img /tmp/256MBempty.img
+          sudo losetup -fP /tmp/256MBwLiveCD.img
+          sudo mount /dev/loop3p1 /mnt/loop
           cd /mnt/loop
           curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | tee | grep browser_download_url.*iso | tee | cut -d : -f 2,3 | tee | tr -d \" | tee | sudo wget -qi -
           sudo sync
@@ -50,6 +55,9 @@ jobs:
           cd ..
           sudo umount /mnt/loop
           sudo losetup -d /dev/loop3
+          ls /tmp
+          zip /tmp/256MBempty.img
+          ls /tmp
       - name: Create release
         id: create-new-release
         uses: actions/create-release@v1
@@ -58,7 +66,7 @@ jobs:
         with:
           tag_name: ${{ github.run_number }}
           release_name: Release 1
-      - name: Upload image to release
+      - name: Upload 256MBwLiveCD to release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -66,4 +74,13 @@ jobs:
           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
           asset_path: /tmp/256MBwLiveCD.img
           asset_name: 256MBwLiveCD.img
+          asset_content_type: application/octet-stream
+      - name: Upload 256MBempty to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+          asset_path: /tmp/256MBempty.img.zip
+          asset_name: 256MBempty.img.zip
           asset_content_type: application/octet-stream
