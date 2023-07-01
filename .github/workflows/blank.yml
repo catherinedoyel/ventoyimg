@@ -40,7 +40,7 @@ jobs:
           lsblk
           sudo mkdosfs -F 32 /dev/loop3p1 -n ventoy
           sudo mkdir /mnt/loop
-          sudo mount /dev/loop3p1 /mnt/ventoy
+          sudo mount /dev/loop3p1 /mnt/loop
           sudo mkdir /mnt/loop/ventoy
           sudo cp ventoy.json /mnt/loop/ventoy
           umount /mnt/loop/ventoy
