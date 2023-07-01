@@ -84,9 +84,11 @@ jobs:
           #sudo mount /dev/loop3p1 /mnt/loop
           #echo file system mounted
           #cd /mnt/loop
-          #echo change into /mnt/loop
-          #curl -s https://gparted.org/download.php | grep amd64.iso | cut -f2 -d "\""| sudo wget -qi -
-          #echo file downloaded
+          df
+          cd /tmp
+          curl -s https://gparted.org/download.php | grep amd64.iso | cut -f2 -d "\""| sudo wget -qi -
+          echo file downloaded
+          df
           #sudo sync
           #sudo losetup -d /dev/loop3
       - name: Create release
@@ -97,7 +99,7 @@ jobs:
         with:
           tag_name: ${{ github.run_number }}
           release_name: Build ${{ github.run_number }}
-      - name: Upload 256MBwLiveCD to release
+      - name: Upload 0256MBwLiveCD to release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -106,14 +108,14 @@ jobs:
           asset_path: /tmp/256MBwLiveCD.img
           asset_name: 0256MBwLiveCD_build${{ github.run_number }}.img
           asset_content_type: application/octet-stream
-      - name: Upload 256MBempty to release
+      - name: Upload 0256MBempty to release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-          asset_path: /tmp/256MBempty_build.img.zip
-          asset_name: 0256MBempty${{ github.run_number }}.img.zip
+          asset_path: /tmp/256MBempty.img.zip
+          asset_name: 0256MBempty_build${{ github.run_number }}.img.zip
           asset_content_type: application/octet-stream
       - name: Upload 0512MBempty to release
         uses: actions/upload-release-asset@v1
