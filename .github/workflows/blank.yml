@@ -69,7 +69,6 @@ jobs:
           sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
           cd ..
           sudo mkdosfs -F 32 /dev/loop3p1 -n VENTOY
-          sudo mkdir /mnt/loop
           sudo mount /dev/loop3p1 /mnt/loop
           sudo chmod 777 /mnt/loop
           sudo mkdir /mnt/loop/ventoy
