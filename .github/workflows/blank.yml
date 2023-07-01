@@ -61,5 +61,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload-url: ${{ steps.create-new-release.outputs.upload_url }}
+          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
           asset_path: /tmp/256MBwLiveCD.img
