@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Build img
+name: Build Images
 
 # Controls when the workflow will run
 on:
@@ -29,6 +29,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | grep browser_download_url.*linux.tar.gz | cut -d : -f 2,3 | tr -d \" | wget -qi -
+          df -h
           tar -xf ventoy-*
           rm *.gz
           cd ventoy-*
@@ -58,6 +59,7 @@ jobs:
           cd /tmp
           zip -r 256MBempty.img.zip 256MBempty.img
           ls /tmp
+          df -h
       - name: Create release
         id: create-new-release
         uses: actions/create-release@v1
@@ -65,7 +67,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.run_number }}
-          release_name: Release 1
+          release_name: Build ${{ github.run_number }}
       - name: Upload 256MBwLiveCD to release
         uses: actions/upload-release-asset@v1
         env:
@@ -73,7 +75,7 @@ jobs:
         with:
           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
           asset_path: /tmp/256MBwLiveCD.img
-          asset_name: 256MBwLiveCD.img
+          asset_name: 0256MBwLiveCD.img
           asset_content_type: application/octet-stream
       - name: Upload 256MBempty to release
         uses: actions/upload-release-asset@v1
@@ -82,5 +84,5 @@ jobs:
         with:
           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
           asset_path: /tmp/256MBempty.img.zip
-          asset_name: 256MBempty.img.zip
+          asset_name: 0256MBempty.img.zip
           asset_content_type: application/octet-stream
