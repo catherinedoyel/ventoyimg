@@ -63,3 +63,4 @@ jobs:
         with:
           upload_url: ${{ steps.create-new-release.outputs.upload_url }}
           asset_path: /tmp/256MBwLiveCD.img
+          asset_name: 256MBwLiveCD.img
