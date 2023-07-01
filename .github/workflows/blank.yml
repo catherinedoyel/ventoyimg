@@ -90,12 +90,6 @@ jobs:
           df
           sudo sync
           sudo losetup -d /dev/loop3
-      - name: Cache Empty packages
-        uses: actions/cache@v3
-        with:
-          path: |
-            /tmp/256MBempty.img.zip
-            /tmp/0512MBempty.img.zip
       - name: Create release
         id: create-new-release
         uses: actions/create-release@v1
