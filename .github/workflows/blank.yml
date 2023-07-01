@@ -43,7 +43,7 @@ jobs:
           sudo mkdir /mnt/loop/ventoy
           sudo cp ventoy.json /mnt/loop/ventoy
           cd /mnt/loop
-          curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | grep browser_download_url*livecd.iso | cut -d : -f 2,3 | tr -d \" | wget -i -
+          curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | tee | grep browser_download_url*livecd.iso | tee | cut -d : -f 2,3 | tee | tr -d \" | tee | wget -qi -
           sudo sync
           cd ..
           ls
