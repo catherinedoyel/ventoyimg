@@ -37,7 +37,6 @@ jobs:
           sudo losetup -fP /tmp/256MBwLiveCD.img
           sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
           cd ..
-          lsblk
           sudo mkdosfs -F 32 /dev/loop3p1 -n ventoy
           sudo mkdir /mnt/loop
           sudo mount /dev/loop3p1 /mnt/loop
@@ -45,3 +44,7 @@ jobs:
           sudo cp ventoy.json /mnt/loop/ventoy
           sudo umount /mnt/loop
           sudo losetup -d /dev/loop3
+      - uses: actions/upload-artifact@v3
+        with:
+            name: generatedimage
+            path: /tmp/256MBwLiveCD.img
