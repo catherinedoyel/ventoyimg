@@ -79,16 +79,16 @@ jobs:
           cd /tmp
           zip -r 0512MBempty.img.zip 0512MBempty.img
           rm /tmp/0512MBempty.img
-          sudo losetup -fP /tmp/0512MBwGpartedLive.img
-          echo loopback running
-          sudo mount /dev/loop3p1 /mnt/loop
-          echo file system mounted
-          cd /mnt/loop
-          echo change into /mnt/loop
-          curl -s https://gparted.org/download.php | grep amd64.iso | cut -f2 -d "\""| sudo wget -qi -
-          echo file downloaded
-          sudo sync
-          sudo losetup -d /dev/loop3
+          #sudo losetup -fP /tmp/0512MBwGpartedLive.img
+          #echo loopback running
+          #sudo mount /dev/loop3p1 /mnt/loop
+          #echo file system mounted
+          #cd /mnt/loop
+          #echo change into /mnt/loop
+          #curl -s https://gparted.org/download.php | grep amd64.iso | cut -f2 -d "\""| sudo wget -qi -
+          #echo file downloaded
+          #sudo sync
+          #sudo losetup -d /dev/loop3
       - name: Create release
         id: create-new-release
         uses: actions/create-release@v1
