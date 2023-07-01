@@ -42,6 +42,7 @@ jobs:
           sudo mkdir /mnt/loop
           sudo mount /dev/loop3p1 /mnt/loop
           sudo mkdir /mnt/loop/ventoy
-          sudo cp ventoy.json /mnt/loop/ventoy
+          pwd
+          sudo cp $GITHUB_WORKSPACE/ventoy.json /mnt/loop/ventoy
           umount /mnt/loop/ventoy
           sudo losetup -d /dev/loop3
