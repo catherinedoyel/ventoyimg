@@ -44,8 +44,8 @@ jobs:
           sudo cp ventoy.json /mnt/loop/ventoy
           echo ventoy.json copied
           cd /mnt/loop
-          echo directory changed to $pwd
-          curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | grep browser_download_url.*livecd.iso | cut -d : -f 2,3 | tr -d \" | wget -qi -
+          echo directory changed to
+          curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | grep browser_download_url.*iso | cut -d : -f 2,3 | tr -d \" | wget -qi -
           echo file downloaded
           sudo sync
           cd
