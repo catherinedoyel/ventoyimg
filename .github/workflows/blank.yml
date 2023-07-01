@@ -38,6 +38,7 @@ jobs:
           sudo losetup -fP /tmp/256MBwLiveCD.img
           sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
           lsblk
+          mkdosfs -F 32 /dev/loop3p1 -n ventoy
           sudo mkdir /mnt/ventoy
           sudo mount /dev/loop3p1 /mnt/ventoy
           sudo mkdir /mnt/loop/ventoy
