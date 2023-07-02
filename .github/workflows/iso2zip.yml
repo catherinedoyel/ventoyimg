@@ -34,13 +34,14 @@ jobs:
           sudo mount -o loop ventoy*.iso /mnt/iso
           ls /mnt/iso
           zip -r /tmp/livecd.zip /mnt/iso
-      - name: Wait until release is made.
-        uses: lewagon/wait-on-check-action@v1.3.1
+      - name: Create release
+        id: create-new-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          ref: master
-          check-name: 'Build Images'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
+          tag_name: ${{ github.run_number }}
+          release_name: Build ${{ github.run_number }}      
       - name: Upload livecd.zip to release
         uses: actions/upload-release-asset@v1
         env:

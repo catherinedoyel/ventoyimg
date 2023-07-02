@@ -93,14 +93,6 @@ jobs:
           sudo losetup -d /dev/loop3
           cd /tmp
           zip -r 1024MBempty.img.zip 1024MBempty.img
-      - name: Create release
-        id: create-new-release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.run_number }}
-          release_name: Build ${{ github.run_number }}
       - name: Upload 0256MBwLiveCD to release
         uses: actions/upload-release-asset@v1
         env:
