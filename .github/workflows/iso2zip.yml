@@ -33,7 +33,7 @@ jobs:
           sudo mkdir /mnt/iso
           sudo mount -o loop ventoy*.iso /mnt/iso
           ls /mnt/iso
-          zip /mnt/iso /tmp/livecd.zip
+          zip -r /tmp/livecd.zip /mnt/iso
       - name: Upload livecd.zip to release
         uses: actions/upload-release-asset@v1
         env:
