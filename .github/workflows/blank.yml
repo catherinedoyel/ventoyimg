@@ -55,7 +55,13 @@ jobs:
           sudo mkdir /mnt/iso
           sudo chmod 777 /mnt/iso
           sudo mount -o loop ventoy*.iso /mnt/iso
-          cd /mnt/iso
+          cp -r /mnt/iso /tmp/
+          tree /tmp/iso
+          cp -fr $GITHUB_WORKSPACE/Super-UEFIinSecureBoot-Disk_minimal /tmp/iso
+          tree /tmp/iso
+          cp -f /mnt/iso/EFI/boot/bootx64.efi /tmp/iso/EFI/boot/grubx64_real.efi
+          tree /tmp/iso
+          cd /tmp/iso
           zip -r /tmp/livecd.zip EFI
           cd /mnt/loop
           sudo umount /mnt/iso
