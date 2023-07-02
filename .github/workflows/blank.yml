@@ -51,6 +51,13 @@ jobs:
           sudo mount /dev/loop3p1 /mnt/loop
           cd /mnt/loop
           curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | tee | grep browser_download_url.*iso | tee | cut -d : -f 2,3 | tee | tr -d \" | tee | sudo wget -qi -
+          echo rebuilding iso into zip.
+          ls
+          sudo mkdir /mnt/iso
+          sudo mount -o loop ventoy*.iso /mnt/iso
+          ls /mnt/iso
+          zip -r /tmp/livecd.zip /mnt/iso
+          sudo umount /mnt/iso
           sudo sync
           ls
           cd ..
@@ -93,15 +100,14 @@ jobs:
           sudo losetup -d /dev/loop3
           cd /tmp
           zip -r 1024MBempty.img.zip 1024MBempty.img
-      - name: Upload 0256MBwLiveCD to release
-        uses: actions/upload-release-asset@v1
+      - name: Create release
+        id: create-new-release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-          asset_path: /tmp/256MBwLiveCD.img
-          asset_name: 0256MBwLiveCD_build${{ github.run_number }}.img
-          asset_content_type: application/octet-stream
+          tag_name: ${{ github.run_number }}
+          release_name: Build ${{ github.run_number }}  
       - name: Upload 0256MBempty to release
         uses: actions/upload-release-asset@v1
         env:
@@ -129,3 +135,22 @@ jobs:
             asset_path: /tmp/1024MBempty.img.zip
             asset_name: 1024MBempty${{ github.run_number }}.img.zip
             asset_content_type: application/octet-stream
+      - name: Upload livecd.zip to release
+        uses: actions/upload-release-asset@v1
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+            asset_path: /tmp/livecd.zip
+            asset_name: LiveCD_build${{ github.run_number }}.zip
+            asset_content_type: application/octet-stream
+      - name: Upload 0256MBwLiveCD to release
+        uses: actions/upload-release-asset@v1
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+            asset_path: /tmp/256MBwLiveCD.img
+            asset_name: 0256MBwLiveCD_build${{ github.run_number }}.img
+            asset_content_type: application/octet-stream
+          
