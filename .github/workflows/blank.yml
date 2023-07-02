@@ -52,14 +52,13 @@ jobs:
           cd /mnt/loop
           curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | tee | grep browser_download_url.*iso | tee | cut -d : -f 2,3 | tee | tr -d \" | tee | sudo wget -qi -
           echo rebuilding iso into zip.
-          ls
           sudo mkdir /mnt/iso
+          sudo chmod 777 /mnt/iso
           sudo mount -o loop ventoy*.iso /mnt/iso
-          ls /mnt/iso
-          zip -r /tmp/livecd.zip /mnt/iso
+          cd /mnt/iso
+          zip -r /tmp/livecd.zip EFI
+          cd /mnt/loop
           sudo umount /mnt/iso
-          sudo sync
-          ls
           cd ..
           sudo umount /mnt/loop
           sudo losetup -d /dev/loop3
