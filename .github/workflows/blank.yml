@@ -61,6 +61,7 @@ jobs:
           cp -f $GITHUB_WORKSPACE/Super-UEFIinSecureBoot-Disk_minimal/ENROLL_THIS_KEY_IN_MOKMANAGER.cer /tmp/iso
           tree /tmp/iso
           cp -f /mnt/iso/EFI/boot/bootx64.efi /tmp/iso/EFI/boot/grubx64_real.efi
+          rm -f /tmp/iso/EFI/boot/BOOTX64.efi
           tree /tmp/iso
           cd /tmp/iso
           zip -r /tmp/livecd.zip EFI
