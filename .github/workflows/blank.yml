@@ -64,6 +64,7 @@ jobs:
           cp -f /mnt/iso/EFI/boot/bootx64.efi /tmp/iso/EFI/boot/grubx64_real.efi
           tree /tmp/iso
           cd /tmp/iso
+          echo "menuentry 'KeyTool.efi' { chainloader /EFI/boot/KeyTool.efi }" >> /tmp/iso/EFI/boot/grub.cfg
           zip -r /tmp/livecd.zip *
           cd /mnt/loop
           sudo umount /mnt/iso
