@@ -152,13 +152,4 @@ jobs:
             asset_path: /tmp/livecd.zip
             asset_name: LiveCD_build${{ github.run_number }}.zip
             asset_content_type: application/octet-stream
-      - name: Upload 0256MBwLiveCD to release
-        uses: actions/upload-release-asset@v1
-        env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-            upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-            asset_path: /tmp/256MBwLiveCD.img
-            asset_name: 0256MBwLiveCD_build${{ github.run_number }}.img
-            asset_content_type: application/octet-stream
           
