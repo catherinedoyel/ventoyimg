@@ -47,30 +47,11 @@ jobs:
           sudo umount /mnt/loop
           sudo losetup -d /dev/loop3
           cp /tmp/256MBwLiveCD.img /tmp/256MBempty.img
-          sudo losetup -fP /tmp/256MBwLiveCD.img
-          sudo mount /dev/loop3p1 /mnt/loop
-          cd /mnt/loop
-          curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | tee | grep browser_download_url.*iso | tee | cut -d : -f 2,3 | tee | tr -d \" | tee | sudo wget -qi -
-          echo rebuilding iso into zip.
-          sudo mkdir /mnt/iso
-          sudo chmod 777 /mnt/iso
-          sudo mount -o loop ventoy*.iso /mnt/iso
-          cp -r /mnt/iso /tmp/
-          tree /tmp/iso
-          rm /tmp/iso/EFI/boot/bootx64.efi
-          cp -fr $GITHUB_WORKSPACE/vtoyefi/EFI /tmp/iso
-          cp -f $GITHUB_WORKSPACE/vtoyefi/ENROLL_THIS_KEY_IN_MOKMANAGER.cer /tmp/iso
-          tree /tmp/iso
-          cp -f /mnt/iso/EFI/boot/bootx64.efi /tmp/iso/EFI/boot/grubx64_real.efi
-          tree /tmp/iso
+          echo zip trolling
+          mkdir /tmp/iso
+          cp -fr $GITHUB_WORKSPACE/vtoyefi/* /tmp/iso
           cd /tmp/iso
-          echo "menuentry 'KeyTool.efi' { chainloader /EFI/boot/KeyTool.efi }" >> /tmp/iso/EFI/boot/grub.cfg
-          zip -r /tmp/livecd.zip *
-          cd /mnt/loop
-          sudo umount /mnt/iso
-          cd ..
-          sudo umount /mnt/loop
-          sudo losetup -d /dev/loop3
+          zip -r /tmp/fat32usb.zip *
           cd /tmp
           zip -r 256MBempty.img.zip 256MBempty.img
           rm /tmp/256MBempty.img
@@ -149,7 +130,7 @@ jobs:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
             upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-            asset_path: /tmp/livecd.zip
-            asset_name: LiveCD_build${{ github.run_number }}.zip
+            asset_path: /tmp/fat32usb.zip
+            asset_name: fat32usb_build${{ github.run_number }}.zip
             asset_content_type: application/octet-stream
           
