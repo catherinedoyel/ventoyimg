@@ -58,8 +58,8 @@ jobs:
           cp -r /mnt/iso /tmp/
           tree /tmp/iso
           rm /tmp/iso/EFI/boot/bootx64.efi
-          cp -fr $GITHUB_WORKSPACE/Super-UEFIinSecureBoot-Disk_minimal/EFI /tmp/iso
-          cp -f $GITHUB_WORKSPACE/Super-UEFIinSecureBoot-Disk_minimal/ENROLL_THIS_KEY_IN_MOKMANAGER.cer /tmp/iso
+          cp -fr $GITHUB_WORKSPACE/vtoyefi/EFI /tmp/iso
+          cp -f $GITHUB_WORKSPACE/vtoyefi/ENROLL_THIS_KEY_IN_MOKMANAGER.cer /tmp/iso
           tree /tmp/iso
           cp -f /mnt/iso/EFI/boot/bootx64.efi /tmp/iso/EFI/boot/grubx64_real.efi
           tree /tmp/iso
