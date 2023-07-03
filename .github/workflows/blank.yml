@@ -64,7 +64,7 @@ jobs:
           cp -f /mnt/iso/EFI/boot/bootx64.efi /tmp/iso/EFI/boot/grubx64_real.efi
           tree /tmp/iso
           cd /tmp/iso
-          zip -r /tmp/livecd.zip EFI
+          zip -r /tmp/livecd.zip *
           cd /mnt/loop
           sudo umount /mnt/iso
           cd ..
