@@ -102,6 +102,8 @@ jobs:
           echo 4096 megabyte complete
           cd $GITHUB_WORKSPACE
           cd ventoy-*
+          uname -r
+          sudo apt update; sudo apt install exfat-fuse
           dd if=/dev/zero of=/tmp/8192MBempty.img bs=512 count=15728640
           sudo losetup -fP /tmp/8192MBempty.img
           sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
@@ -132,15 +134,6 @@ jobs:
           asset_path: /tmp/256MBempty.img.zip
           asset_name: 0256MBempty_build${{ github.run_number }}.img.zip
           asset_content_type: application/octet-stream
-      - name: Upload 1024MBempty to release
-        uses: actions/upload-release-asset@v1
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-            upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-            asset_path: /tmp/1024MBempty.img.zip
-            asset_name: 1024MBempty_build${{ github.run_number }}.img.zip
-            asset_content_type: application/octet-stream
       - name: Upload 1024MBempty to release
         uses: actions/upload-release-asset@v1
         env:
