@@ -102,8 +102,9 @@ jobs:
           echo 4096 megabyte complete
           cd $GITHUB_WORKSPACE
           cd ventoy-*
-          unxz -v tool/x86_64/mount.exfat-fuse.xz
-          chmod +x tool/x86_64/mount.exfat-fuse
+          ls -la $GITHUB_WORKSPACE/ventoy-*/tool/x86_64/
+          unxz -v $GITHUB_WORKSPACE/ventoy-*/tool/x86_64/mount.exfat-fuse.xz
+          chmod +x $GITHUB_WORKSPACE/ventoy-*/tool/x86_64/mount.exfat-fuse
           uname -r
           dd if=/dev/zero of=/tmp/8192MBempty.img bs=512 count=15728640
           sudo losetup -fP /tmp/8192MBempty.img
