@@ -102,13 +102,14 @@ jobs:
           echo 4096 megabyte complete
           cd $GITHUB_WORKSPACE
           cd ventoy-*
+          unxz -v tool/x86_64/mount.exfat-fuse.xz
+          chmod +x tool/x86_64/mount.exfat-fuse
           uname -r
-          sudo apt update; sudo apt install exfat-fuse
           dd if=/dev/zero of=/tmp/8192MBempty.img bs=512 count=15728640
           sudo losetup -fP /tmp/8192MBempty.img
           sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
           cd ..
-          sudo mount /dev/loop3p1 /mnt/loop
+          sudo $GITHUB_WORKSPACE/ventoy-*/tool/x86_64/mount.exfat-fuse /dev/loop3p1 /mnt/loop
           sudo chmod 777 /mnt/loop
           sudo mkdir /mnt/loop/ventoy
           sudo cp ventoy.json /mnt/loop/ventoy
