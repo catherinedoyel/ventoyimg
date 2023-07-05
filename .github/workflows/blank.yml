@@ -83,9 +83,38 @@ jobs:
           sudo losetup -d /dev/loop3
           cd /tmp
           zip -r 1024MBempty.img.zip 1024MBempty.img
-          echo 4gb sectors 7864320
-          echo 6gb sectors 9830400
-          echo 8gb sectors 15728640
+          echo 1024 megabyte complete
+          cd $GITHUB_WORKSPACE
+          cd ventoy-*
+          dd if=/dev/zero of=/tmp/4096MBempty.img bs=512 count=7864320
+          sudo losetup -fP /tmp/4096MBempty.img
+          sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
+          cd ..
+          sudo mkdosfs -F 32 /dev/loop3p1 -n VENTOY
+          sudo mount /dev/loop3p1 /mnt/loop
+          sudo chmod 777 /mnt/loop
+          sudo mkdir /mnt/loop/ventoy
+          sudo cp ventoy.json /mnt/loop/ventoy
+          sudo umount /mnt/loop
+          sudo losetup -d /dev/loop3
+          cd /tmp
+          zip -r 4096MBempty.img.zip 4096MBempty.img
+          echo 4096 megabyte complete
+          cd $GITHUB_WORKSPACE
+          cd ventoy-*
+          dd if=/dev/zero of=/tmp/8192MBempty.img bs=512 count=15728640
+          sudo losetup -fP /tmp/8192MBempty.img
+          sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
+          cd ..
+          sudo mount /dev/loop3p1 /mnt/loop
+          sudo chmod 777 /mnt/loop
+          sudo mkdir /mnt/loop/ventoy
+          sudo cp ventoy.json /mnt/loop/ventoy
+          sudo umount /mnt/loop
+          sudo losetup -d /dev/loop3
+          cd /tmp
+          zip -r 8192MBempty.img.zip 8192MBempty.img
+          echo 8192 megabyte complete
       - name: Create release
         id: create-new-release
         uses: actions/create-release@v1
@@ -112,7 +141,34 @@ jobs:
             asset_path: /tmp/1024MBempty.img.zip
             asset_name: 1024MBempty_build${{ github.run_number }}.img.zip
             asset_content_type: application/octet-stream
-      - name: Upload livecd.zip to release
+      - name: Upload 1024MBempty to release
+        uses: actions/upload-release-asset@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+            asset_path: /tmp/1024MBempty.img.zip
+            asset_name: 1024MBempty_build${{ github.run_number }}.img.zip
+            asset_content_type: application/octet-stream
+      - name: Upload 4096MBempty to release
+        uses: actions/upload-release-asset@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+            asset_path: /tmp/4096MBempty.img.zip
+            asset_name: 4096MBempty_build${{ github.run_number }}.img.zip
+            asset_content_type: application/octet-stream
+      - name: Upload 8192MBempty to release
+        uses: actions/upload-release-asset@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+            asset_path: /tmp/8192MBempty.img.zip
+            asset_name: 8192MBempty_build${{ github.run_number }}.img.zip
+            asset_content_type: application/octet-stream
+      - name: Upload fat32usb.zip to release
         uses: actions/upload-release-asset@v1
         env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
