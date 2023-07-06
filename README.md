@@ -7,8 +7,11 @@ Do not rely these releases yet. Any files you download labeled as build are not 
 The process is very automated but still relies on a commit to create new releases.
 
 # Using images (preferred solution)
-If you want to try the .img.zip files I would recommend [balenaEtcher for Windows, Mac & Linux](https://etcher.balena.io/), [Chromebook Recovery Utility for Windows, Mac, Linux & **ChromeOS**](https://chrome.google.com/webstore/detail/chromebook-recovery-utili/pocpnlppkickgojjlmhdmidojbmbodfm), or [EtchDroid for Android ](https://play.google.com/store/apps/details?id=eu.depau.etchdroid)  
-- when using EtchDroid you will first need to unzip and get the img file out of the zip folder. You may run into similar issue on a Chromebook.
+If you want to try the .img.zip files I would recommend using the following software.
+- [balenaEtcher for Windows, Mac & Linux](https://etcher.balena.io/)
+- [Chromebook Recovery Utility for Windows, Mac, Linux & **ChromeOS**](https://chrome.google.com/webstore/detail/chromebook-recovery-utili/pocpnlppkickgojjlmhdmidojbmbodfm),
+- [EtchDroid for Android ](https://play.google.com/store/apps/details?id=eu.depau.etchdroid)  
+when using EtchDroid you will first need to unzip and get the img file out of the zip folder. You may run into similar issue on a Chromebook.
 As a part of using the .img.zip files I would recommend the 256MB one first to ensure that the process works correctly. Then get a bigger size once you know it works.
 
 # Using EFI folder
