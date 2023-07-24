@@ -29,7 +29,6 @@ jobs:
       - name: Run a multi-line script
         run: |
           curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | grep browser_download_url.*linux.tar.gz | cut -d : -f 2,3 | tr -d \" | wget -qi -
-          df -h
           tar -xf ventoy-*
           rm *.gz
           cd ventoy-*
