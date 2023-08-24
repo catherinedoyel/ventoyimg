@@ -102,7 +102,6 @@ jobs:
           cd $GITHUB_WORKSPACE
           cd ventoy-*
           sudo chmod +x $GITHUB_WORKSPACE/ventoy-*/tool/x86_64/mount.exfat-fuse
-          uname -r
           dd if=/dev/zero of=/tmp/8192MBempty.img bs=512 count=15728640
           sudo losetup -fP /tmp/8192MBempty.img
           sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
