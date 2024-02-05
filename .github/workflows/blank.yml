@@ -45,7 +45,7 @@ jobs:
           sudo umount /mnt/loop
           sudo losetup -d /dev/loop3
           cp /tmp/256MBwLiveCD.img /tmp/256MBempty.img
-          echo zip trolling
+          echo two images made
           curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | tee | grep browser_download_url.*iso | tee | cut -d : -f 2,3 | tee | tr -d \" | tee | sudo wget -qi -
           echo rebuilding iso into zip.
           sudo mkdir /mnt/iso
