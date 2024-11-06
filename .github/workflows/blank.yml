@@ -32,6 +32,8 @@ jobs:
           tar -xf ventoy-*
           rm *.gz
           cd ventoy-*
+          echo "ventoy version:"
+          pwd
           dd if=/dev/zero of=/tmp/256MBwLiveCD.img bs=512 count=491520
           sudo losetup -fP /tmp/256MBwLiveCD.img
           sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
