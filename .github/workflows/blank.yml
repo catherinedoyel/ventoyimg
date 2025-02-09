@@ -39,18 +39,18 @@ jobs:
           lsblk
           sudo losetup -fP /tmp/256MBwLiveCD.img
           lsblk
-          sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
+          sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop0
           lsblk
           cd ..
           lsblk
-          sudo mkdosfs -F 32 /dev/loop3p1 -n VENTOY
+          sudo mkdosfs -F 32 /dev/loop0p1 -n VENTOY
           sudo mkdir /mnt/loop
-          sudo mount /dev/loop3p1 /mnt/loop
+          sudo mount /dev/loop0p1 /mnt/loop
           sudo chmod 777 /mnt/loop
           sudo mkdir /mnt/loop/ventoy
           sudo cp ventoy.json /mnt/loop/ventoy
           sudo umount /mnt/loop
-          sudo losetup -d /dev/loop3
+          sudo losetup -d /dev/loop0
           cp /tmp/256MBwLiveCD.img /tmp/256MBempty.img
           echo two images made
           curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | tee | grep browser_download_url.*iso | tee | cut -d : -f 2,3 | tee | tr -d \" | tee | sudo wget -qi -
@@ -77,15 +77,15 @@ jobs:
           cd ventoy-*
           dd if=/dev/zero of=/tmp/1024MBempty.img bs=512 count=1966080
           sudo losetup -fP /tmp/1024MBempty.img
-          sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
+          sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop0
           cd ..
-          sudo mkdosfs -F 32 /dev/loop3p1 -n VENTOY
-          sudo mount /dev/loop3p1 /mnt/loop
+          sudo mkdosfs -F 32 /dev/loop0p1 -n VENTOY
+          sudo mount /dev/loop0p1 /mnt/loop
           sudo chmod 777 /mnt/loop
           sudo mkdir /mnt/loop/ventoy
           sudo cp ventoy.json /mnt/loop/ventoy
           sudo umount /mnt/loop
-          sudo losetup -d /dev/loop3
+          sudo losetup -d /dev/loop0
           cd /tmp
           zip -r 1024MBempty.img.zip 1024MBempty.img
           echo 1024 megabyte complete
@@ -93,15 +93,15 @@ jobs:
           cd ventoy-*
           dd if=/dev/zero of=/tmp/4096MBempty.img bs=512 count=7864320
           sudo losetup -fP /tmp/4096MBempty.img
-          sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
+          sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop0
           cd ..
-          sudo mkdosfs -F 32 /dev/loop3p1 -n VENTOY
-          sudo mount /dev/loop3p1 /mnt/loop
+          sudo mkdosfs -F 32 /dev/loop0p1 -n VENTOY
+          sudo mount /dev/loop0p1 /mnt/loop
           sudo chmod 777 /mnt/loop
           sudo mkdir /mnt/loop/ventoy
           sudo cp ventoy.json /mnt/loop/ventoy
           sudo umount /mnt/loop
-          sudo losetup -d /dev/loop3
+          sudo losetup -d /dev/loop0
           cd /tmp
           zip -r 4096MBempty.img.zip 4096MBempty.img
           echo 4096 megabyte complete
@@ -110,14 +110,14 @@ jobs:
           sudo chmod +x $GITHUB_WORKSPACE/ventoy-*/tool/x86_64/mount.exfat-fuse
           dd if=/dev/zero of=/tmp/8192MBempty.img bs=512 count=15728640
           sudo losetup -fP /tmp/8192MBempty.img
-          sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop3
+          sudo yes | sudo ./Ventoy2Disk.sh -I /dev/loop0
           cd ..
-          sudo $GITHUB_WORKSPACE/ventoy-*/tool/x86_64/mount.exfat-fuse /dev/loop3p1 /mnt/loop
+          sudo $GITHUB_WORKSPACE/ventoy-*/tool/x86_64/mount.exfat-fuse /dev/loop0p1 /mnt/loop
           sudo chmod 777 /mnt/loop
           sudo mkdir /mnt/loop/ventoy
           sudo cp ventoy.json /mnt/loop/ventoy
           sudo umount /mnt/loop
-          sudo losetup -d /dev/loop3
+          sudo losetup -d /dev/loop0
           cd /tmp
           zip -r 8192MBempty.img.zip 8192MBempty.img
           echo 8192 megabyte complete
