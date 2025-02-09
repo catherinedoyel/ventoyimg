@@ -115,7 +115,7 @@ jobs:
           sudo losetup -d /dev/loop3
           cd /tmp
           zip -r 8192MBempty.img.zip 8192MBempty.img
-          echo 8192 megabyte complete enjoy
+          echo 8192 megabyte complete
       - name: Create release
         id: create-new-release
         uses: actions/create-release@v1
