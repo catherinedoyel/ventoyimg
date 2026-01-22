@@ -33,7 +33,7 @@ jobs:
           rm *.gz
           cd ventoy-*
           lsblk
-          echo "ventoy version:"
+          echo "ventoy version:1.1.10"
           pwd
           dd if=/dev/zero of=/tmp/256MBwLiveCD.img bs=512 count=491520
           lsblk
