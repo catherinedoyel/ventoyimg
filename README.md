@@ -2,6 +2,8 @@
 
 [![Build img](https://github.com/catherinedoyel/ventoyimg/actions/workflows/blank.yml/badge.svg)](https://github.com/catherinedoyel/ventoyimg/actions/workflows/blank.yml)
 
+[Ventoy GitHub](https://github.com/Ventoy/Ventoy)
+
 Do not rely on these releases yet. Any files you download labeled as build are not widely tested.
 
 Pre-built disk images with Ventoy and a custom EFI boot menu (GParted Live not included but supported, Ventoy installer, KeyTool). Built automatically from the latest upstream Ventoy release.
